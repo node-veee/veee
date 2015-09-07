@@ -136,4 +136,9 @@ describe('v', function() {
     });
   });
   
+  describe('plugins', function() {
+    require('./plugins/any');
+    require('./plugins/array');
+    require('./plugins/boolean');
+  });
 });
