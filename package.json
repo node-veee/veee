@@ -1,0 +1,26 @@
+{
+  "name": "veee",
+  "version": "1.0.0",
+  "description": "javascript object validation",
+  "main": "lib/v/index.js",
+  "scripts": {
+    "test": "mocha -R spec -b -t 30000 test",
+    "coverage": "mocha -b -t 30000 test --require blanket --reporter html-cov > coverage.html;"
+  },  
+  "config": {
+    "blanket": {
+      "pattern": "lib/v"
+    }
+  },
+  "author": "Vladimir Popov <rusintez@gmail.com>",
+  "license": "MIT",
+  "dependencies": {
+    "seed-extend": "^1.0.0",
+    "seed-queue": "^2.0.0"
+  },
+  "devDependencies": {
+    "blanket": "^1.1.7",
+    "chai": "^3.2.0",
+    "mocha": "^2.3.1"
+  }
+}
