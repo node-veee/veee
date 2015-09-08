@@ -7,6 +7,15 @@ v.use(any);
 
 describe('any', function() {
   
+  describe('#any', function() {
+    it('should pass', function(done) {
+      v.validate(null, v.any(), function(err, result) {
+        should.not.exist(err);
+        done();
+      });
+    });
+  });
+  
   describe('#equal', function() {
     it('should pass', function(done) {
       v.validate(5, v.any().equal(5), function(err, result) {
