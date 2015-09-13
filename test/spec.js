@@ -152,5 +152,6 @@ describe('v', function() {
     require('./plugins/number');
     require('./plugins/object');
     require('./plugins/string');
+    require('./plugins/or');
   });
 });

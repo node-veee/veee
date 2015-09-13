@@ -38,6 +38,10 @@ v.validate(5, v.number().positive().integer(), function(err, result) {
 v.validate(-1, v.number().positive(), function(err, result) {
   // { type: 'number', name: 'positive', path: '_', value: -1, error: 'is not a positive number' }, undefined
 });
+
+var date = new Date();
+
+v.validate(date, v.or(v.date(), v.string().isodate()), ...);
 ```
 
 ### Build-in types
