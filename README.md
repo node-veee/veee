@@ -59,6 +59,4 @@ v.validate(date, v.or(v.date(), v.string().isodate()), ...);
 
 ### TODO
 
-- 100% coverage on core + plugins
-- fix object & array validators to update error paths
 - update documentation
