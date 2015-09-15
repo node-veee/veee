@@ -1,6 +1,6 @@
 {
-  "name": "veee",
-  "version": "1.0.0",
+  "name": "node-veee",
+  "version": "1.0.1",
   "description": "javascript object validation",
   "main": "lib/v/index.js",
   "scripts": {
