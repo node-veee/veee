@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    <meta charset="UTF-8">
+    <title>veee by node-veee</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="stylesheets/normalize.css" media="screen">
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen">
+    <link rel="stylesheet" type="text/css" href="stylesheets/github-light.css" media="screen">
+  </head>
+  <body>
+    <section class="page-header">
+      <h1 class="project-name">veee</h1>
+      <h2 class="project-tagline">Extendable object schema validation module inspired by joi (almost the same, but async and extendable)</h2>
+      <a href="https://github.com/node-veee/veee" class="btn">View on GitHub</a>
+      <a href="https://github.com/node-veee/veee/zipball/master" class="btn">Download .zip</a>
+      <a href="https://github.com/node-veee/veee/tarball/master" class="btn">Download .tar.gz</a>
+    </section>
+
+    <section class="main-content">
+      <h1>
+<a id="veee" class="anchor" href="#veee" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>veee</h1>
+
+<p>Object schema validation inspired by <code>joi</code> (almost the same, but async and extensible)</p>
+
+<h3>
+<a id="installation" class="anchor" href="#installation" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Installation</h3>
+
+<pre><code>$ npm install node-veee --save
+</code></pre>
+
+<h3>
+<a id="usage" class="anchor" href="#usage" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Usage</h3>
+
+<div class="highlight highlight-source-js"><pre>
+<span class="pl-k">var</span> V <span class="pl-k">=</span> <span class="pl-c1">require</span>(<span class="pl-s"><span class="pl-pds">'</span>node-veee<span class="pl-pds">'</span></span>);
+
+<span class="pl-k">var</span> v <span class="pl-k">=</span> <span class="pl-k">new</span> <span class="pl-en">V</span>([options]);
+
+<span class="pl-smi">v</span>.<span class="pl-en">use</span>(<span class="pl-k">function</span>(<span class="pl-smi">v</span>) {
+  <span class="pl-smi">v</span>.<span class="pl-en">register</span>(<span class="pl-s"><span class="pl-pds">'</span>number<span class="pl-pds">'</span></span>, <span class="pl-k">function</span>(<span class="pl-smi">value</span>, <span class="pl-smi">context</span>, <span class="pl-smi">cb</span>) {
+    <span class="pl-k">if</span> (<span class="pl-k">typeof</span> value <span class="pl-k">===</span> <span class="pl-s"><span class="pl-pds">'</span>number<span class="pl-pds">'</span></span> <span class="pl-k">&amp;&amp;</span> value <span class="pl-k">===</span> value) <span class="pl-k">return</span> <span class="pl-en">cb</span>();
+    <span class="pl-en">cb</span>(<span class="pl-s"><span class="pl-pds">'</span>is not a number<span class="pl-pds">'</span></span>);
+  });
+
+  <span class="pl-smi">v</span>.<span class="pl-en">register</span>(<span class="pl-s"><span class="pl-pds">'</span>number<span class="pl-pds">'</span></span>, <span class="pl-s"><span class="pl-pds">'</span>integer<span class="pl-pds">'</span></span>, <span class="pl-k">function</span>(<span class="pl-smi">value</span>, <span class="pl-smi">context</span>, <span class="pl-smi">cb</span>) {
+    <span class="pl-k">if</span> (<span class="pl-c1">parseInt</span>(<span class="pl-smi">value</span>.<span class="pl-c1">toString</span>(), <span class="pl-c1">10</span>) <span class="pl-k">===</span> value) <span class="pl-k">return</span> <span class="pl-en">cb</span>();
+    <span class="pl-en">cb</span>(<span class="pl-s"><span class="pl-pds">'</span>is not an integer<span class="pl-pds">'</span></span>);
+  });
+
+  <span class="pl-smi">v</span>.<span class="pl-en">register</span>(<span class="pl-s"><span class="pl-pds">'</span>number<span class="pl-pds">'</span></span>, <span class="pl-s"><span class="pl-pds">'</span>positive<span class="pl-pds">'</span></span>, <span class="pl-k">function</span>(<span class="pl-smi">value</span>, <span class="pl-smi">context</span>, <span class="pl-smi">cb</span>) {
+    <span class="pl-k">if</span> (value <span class="pl-k">&gt;</span> <span class="pl-c1">0</span>) <span class="pl-k">return</span> <span class="pl-en">cb</span>();
+    <span class="pl-en">cb</span>(<span class="pl-s"><span class="pl-pds">'</span>is not a positive number<span class="pl-pds">'</span></span>);
+  });
+})
+
+<span class="pl-smi">v</span>.<span class="pl-en">validate</span>(<span class="pl-c1">5</span>, <span class="pl-smi">v</span>.<span class="pl-en">number</span>().<span class="pl-en">positive</span>().<span class="pl-en">integer</span>(), <span class="pl-k">function</span>(<span class="pl-smi">err</span>, <span class="pl-smi">result</span>) {
+  <span class="pl-c">// null, 5</span>
+});
+
+<span class="pl-smi">v</span>.<span class="pl-en">validate</span>(<span class="pl-k">-</span><span class="pl-c1">1</span>, <span class="pl-smi">v</span>.<span class="pl-en">number</span>().<span class="pl-en">positive</span>(), <span class="pl-k">function</span>(<span class="pl-smi">err</span>, <span class="pl-smi">result</span>) {
+  <span class="pl-c">// { type: 'number', name: 'positive', path: '_', value: -1, error: 'is not a positive number' }, undefined</span>
+});
+
+<span class="pl-k">var</span> date <span class="pl-k">=</span> <span class="pl-k">new</span> <span class="pl-en">Date</span>();
+
+<span class="pl-smi">v</span>.<span class="pl-en">validate</span>(date, <span class="pl-smi">v</span>.<span class="pl-en">or</span>(<span class="pl-smi">v</span>.<span class="pl-en">date</span>(), <span class="pl-smi">v</span>.<span class="pl-en">string</span>().<span class="pl-en">isodate</span>()), <span class="pl-k">...</span>);</pre></div>
+
+<h3>
+<a id="build-in-types" class="anchor" href="#build-in-types" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Build-in types</h3>
+
+<p><code>veee</code> is trying to be very similar to <code>joi</code>. it contains a few build-in validators:</p>
+
+<ul>
+<li>number</li>
+<li>string</li>
+<li>boolean</li>
+<li>array</li>
+<li>object</li>
+<li>date</li>
+<li>function</li>
+<li>any (inherited by all types)</li>
+</ul>
+
+<h3>
+<a id="todo" class="anchor" href="#todo" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>TODO</h3>
+
+<ul>
+<li>update documentation</li>
+</ul>
+
+      <footer class="site-footer">
+        <span class="site-footer-owner"><a href="https://github.com/node-veee/veee">veee</a> is maintained by <a href="https://github.com/node-veee">node-veee</a>.</span>
+
+        <span class="site-footer-credits">This page was generated by <a href="https://pages.github.com">GitHub Pages</a> using the <a href="https://github.com/jasonlong/cayman-theme">Cayman theme</a> by <a href="https://twitter.com/jasonlong">Jason Long</a>.</span>
+      </footer>
+
+    </section>
+
+  
+  </body>
+</html>
