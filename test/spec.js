@@ -95,6 +95,13 @@ describe('v', function() {
         done();
       });
     });
+    
+    it('should be an instance of Validator', function() {
+      var v = new V();
+      v.register('custom', 'method', function(value, ctx, cb) { cb(); });
+      v.custom().should.be.instanceOf(v.Validator);
+      v.custom().method().should.be.instanceOf(v.Validator);
+    });
   });
 
   describe('#validate', function() {

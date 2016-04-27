@@ -4,13 +4,13 @@ Object schema validation inspired by `joi` (almost the same, but async and exten
 
 ### Installation
 
-    $ npm install veee --save
+    $ npm install node-veee --save
 
 ### Usage
     
 ```js
 
-var V = require('veee');
+var V = require('node-veee');
 
 var v = new V([options]);
 
